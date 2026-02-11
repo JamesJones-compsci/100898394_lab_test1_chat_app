@@ -8,7 +8,7 @@ const messageInput = document.getElementById("message-input")
 const typingDiv = document.getElementById("typing-indicator")
 
 // -------------------- REGISTER USER --------------------
-const username = localStorage.getItem("username")
+const username = localStorage.getItem("user")
 socket.emit("register-user", username)
 
 // -------------------- JOIN ROOM --------------------
@@ -71,3 +71,9 @@ socket.on("previous-messages", (messages) => {
         chatBox.innerHTML += `<p><b>${msg.from_user}:</b> ${msg.message}</p>`
     })
 })
+
+// -------------------- LOGOUT --------------------
+function logout() {
+    localStorage.removeItem("user")
+    window.location.href = "/views/login.html"
+}

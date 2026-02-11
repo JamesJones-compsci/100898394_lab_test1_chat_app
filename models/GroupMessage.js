@@ -1,9 +1,19 @@
 const mongoose = require('mongoose')
 
 const groupMessageSchema = new mongoose.Schema({
-    from_user: String,
-    room: String,
-    message: String,
+    from_user: {
+        type: String,
+        required: true
+    },
+    room: {
+        type: String,
+        required: true
+    },
+    message: {
+        type: String,
+        required: true,
+        trim: true
+    },
     date_sent: {
         type: Date,
         default: Date.now

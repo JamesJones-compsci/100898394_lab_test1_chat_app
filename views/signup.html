@@ -9,10 +9,10 @@
 <h2>Signup</h2>
 
 <form id="signupForm">
-    <input class="form-control mb-2" placeholder="Username" id="username">
-    <input class="form-control mb-2" placeholder="First Name" id="firstname">
-    <input class="form-control mb-2" placeholder="Last Name" id="lastname">
-    <input class="form-control mb-2" type="password" placeholder="Password" id="password">
+    <input class="form-control mb-2" placeholder="Username" id="username" required>
+    <input class="form-control mb-2" placeholder="First Name" id="firstname" required>
+    <input class="form-control mb-2" placeholder="Last Name" id="lastname" required>
+    <input class="form-control mb-2" type="password" placeholder="Password" id="password" required>
     <button class="btn btn-primary">Signup</button>
 </form>
 
@@ -35,7 +35,11 @@ document.getElementById("signupForm").addEventListener("submit", async (e) => {
     })
 
     const data = await res.json()
-    alert(data.message || data.error)
+    // alert(data.message || data.error)
+    if (res.ok) {
+    alert(data.message)
+    window.location.href = "/views/login.html"
+}
 
 })
 </script>

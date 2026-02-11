@@ -2,12 +2,19 @@
 // Express + Socket.IO + Mongoose backend
 
 // -------------------- IMPORT MODULES --------------------
+require("dotenv").config()
+
 const express = require("express")
 const path = require("path")
 const http = require("http")
 const socketio = require("socket.io")
 const mongoose = require("mongoose")
 const bodyParser = require("body-parser")
+
+const User = require("./models/User")
+const GroupMessage = require("./models/GroupMessage")
+const PrivateMessage = require("./models/PrivateMessage")
+
 
 // -------------------- EXPRESS SETUP --------------------
 const app = express()
@@ -20,43 +27,13 @@ app.use(express.static(path.join(__dirname, "public")))
 app.use(bodyParser.json())
 
 // -------------------- MONGODB CONNECTION --------------------
-mongoose.connect("mongodb://127.0.0.1:27017/labtest_chat", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
+
+mongoose.connect(process.env.MONGO_URI)
+
 const db = mongoose.connection
 db.on("error", console.error.bind(console, "MongoDB connection error:"))
 db.once("open", () => console.log("Connected to MongoDB"))
 
-// -------------------- MONGOOSE SCHEMAS --------------------
-
-// User schema
-const userSchema = new mongoose.Schema({
-    username: { type: String, required: true, unique: true },
-    firstname: String,
-    lastname: String,
-    password: { type: String, required: true },
-    createdOn: { type: Date, default: Date.now }
-})
-const User = mongoose.model("User", userSchema)
-
-// Group message schema
-const groupMessageSchema = new mongoose.Schema({
-    from_user: String,
-    room: String,
-    message: String,
-    date_sent: { type: Date, default: Date.now }
-})
-const GroupMessage = mongoose.model("GroupMessage", groupMessageSchema)
-
-// Private message schema
-const privateMessageSchema = new mongoose.Schema({
-    from_user: String,
-    to_user: String,
-    message: String,
-    date_sent: { type: Date, default: Date.now }
-})
-const PrivateMessage = mongoose.model("PrivateMessage", privateMessageSchema)
 
 // -------------------- EXPRESS ROUTES --------------------
 

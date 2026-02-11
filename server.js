@@ -21,7 +21,7 @@ const app = express()
 const SERVER_PORT = process.env.PORT || 3000
 
 // Serve static files from /public
-app.use(express.static(path.join(__dirname, "public")))
+app.use(express.static(__dirname))
 
 // Use body parser to parse JSON
 app.use(bodyParser.json())

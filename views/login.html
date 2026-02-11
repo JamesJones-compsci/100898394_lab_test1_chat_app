@@ -1,0 +1,33 @@
+<h2>Login</h2>
+
+<form id="loginForm">
+    <input id="username" placeholder="Username">
+    <input id="password" type="password" placeholder="Password">
+    <button>Login</button>
+</form>
+
+<script>
+document.getElementById("loginForm").addEventListener("submit", async (e) => {
+
+    e.preventDefault()
+
+    const res = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            username: username.value,
+            password: password.value
+        })
+    })
+
+    const data = await res.json()
+
+    if (res.ok) {
+        localStorage.setItem("user", data.username)
+        window.location.href = "/views/chat.html"
+    } else {
+        alert(data.error)
+    }
+
+})
+</script>
